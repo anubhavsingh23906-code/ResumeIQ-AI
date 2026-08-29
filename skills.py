@@ -1,29 +1,59 @@
-SKILLS = [
-    "python",
-    "c++",
-    "java",
-    "javascript",
-    "html",
-    "css",
-    "react",
-    "node.js",
-    "express",
-    "sql",
-    "mysql",
-    "mongodb",
-    "pandas",
-    "numpy",
-    "scikit-learn",
-    "machine learning",
-    "deep learning",
-    "tensorflow",
-    "pytorch",
-    "streamlit",
-    "git",
-    "github",
-    "docker",
-    "fastapi"
-]
+ROLE_SKILLS = {
+
+    "Machine Learning Engineer": [
+        "python",
+        "numpy",
+        "pandas",
+        "scikit-learn",
+        "tensorflow",
+        "pytorch",
+        "sql",
+        "docker",
+        "git",
+        "github",
+        "streamlit",
+        "fastapi"
+    ],
+
+    "Data Scientist": [
+        "python",
+        "numpy",
+        "pandas",
+        "sql",
+        "machine learning",
+        "matplotlib",
+        "seaborn",
+        "scikit-learn",
+        "statistics"
+    ],
+
+    "Backend Developer": [
+        "python",
+        "java",
+        "node.js",
+        "express",
+        "sql",
+        "mongodb",
+        "docker",
+        "fastapi",
+        "git"
+    ],
+
+    "Frontend Developer": [
+        "html",
+        "css",
+        "javascript",
+        "react",
+        "git",
+        "github"
+    ]
+}
+SKILLS = []
+
+for skills in ROLE_SKILLS.values():
+    for skill in skills:
+        if skill not in SKILLS:
+            SKILLS.append(skill)
 
 def extract_skills(text):
 
@@ -37,6 +67,16 @@ def extract_skills(text):
 
     return found_skills
 
+def calculate_skill_score(found_skills):
+    return min(len(found_skills) * 10, 100)
+def get_missing_skills(found_skills, role):
 
-def calculate_skill_score(skills):
-    return min(len(skills) * 10, 100)
+    required = ROLE_SKILLS.get(role, [])
+
+    missing = []
+
+    for skill in required:
+        if skill not in found_skills:
+            missing.append(skill)
+
+    return missing
